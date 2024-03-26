@@ -1,5 +1,6 @@
 package com.tuzgen.myapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -33,8 +35,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
     }
 
+    @SuppressLint("MissingPermission")
     fun updateMapLocation(latitude: Double, longitude: Double) {
         val location = LatLng(latitude, longitude)
+        val markerOptions = MarkerOptions().position(location)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        mMap.isMyLocationEnabled = true
+        mMap.addMarker(markerOptions)
     }
 }
